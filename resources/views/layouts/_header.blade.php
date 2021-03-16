@@ -21,7 +21,7 @@
 				    	<li><a href="/ranking">Ranking</a></li>
 				    	<li><a href="/recent">Recent</a></li>
 				    	<li><a href="/check">Self Check</a></li>
-				    	<li><a href="/stats">Statistic</a></li>
+				    	<!--<li><a href="/stats">Statistic</a></li>-->
 					</ul>
 				</div><!-- /.navbar-collapse -->
 			</div><!-- /.container -->

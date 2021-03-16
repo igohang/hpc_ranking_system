@@ -11,6 +11,7 @@ use Redirect;
 use Session;
 use App\record_tbl;
 use App\simple_pass;
+use GuzzleHttp\Client;
 date_default_timezone_set("Asia/Bangkok");
 
 class homeController extends Controller
@@ -20,6 +21,12 @@ class homeController extends Controller
     	}
     public function index(Request $request)
     {
+        #$client = new Client();
+        #$response = $client->post('https://auth.innosoft.kmutt.ac.th/');
+        #$response = Http::post('https://auth.innosoft.kmutt.ac.th/', [
+        #    'username' => '59070701614',
+        #    'password' => 'test',
+        #]);
 
      	$rules = array('stu_id' => 'bail|required',
          'remark' =>'nullable',
@@ -27,18 +34,22 @@ class homeController extends Controller
          'code' => 'required');
      	$data  =  Input::except(array('_token'));
     	$messages = [
-    'stu_id.required' => 'Please provide your student ID',
-    'pass.required' => 'Please probide your password',
-    'code.required' => 'Please upload your code in .c or .cpp extenstion',
-	];
-	$validator = Validator::make($data, $rules, $messages);
-
-      if ($validator->fails()){
-         return Redirect::back()->withInput(Input::all())->withErrors($validator);
-      }
-      $stu_id = $request->input('stu_id');
-      $pass = $request->input('pass');
-   	  $clauses = [['stu_id','=',$stu_id]];
+        'stu_id.required' => 'Please provide your student ID',
+        #'stu_id.required' => $response,
+        'pass.required' => 'Please provide your password',
+        'code.required' => 'Please upload your code in .c or .cpp extenstion',
+        ];
+        $validator = Validator::make($data, $rules, $messages);
+        
+        if ($validator->fails()){
+            return Redirect::back()->withInput(Input::all())->withErrors($validator);
+        }
+        $stu_id = $request->input('stu_id');
+        $pass = $request->input('pass');
+        $clauses = [['stu_id','=',$stu_id]];
+        //////////
+        
+        //////////
    	  $result = simple_pass::where($clauses)->first();
       if(is_null($result)) {
       	return Redirect::back()->withInput(Input::all())->withErrors("Invalid Student ID");
@@ -56,7 +67,7 @@ class homeController extends Controller
       else {
       	$code = array('code'=> Input::file('code'));
       	if (Input::file('code')->isValid()) {
-         $destinationPath = '/nfs/code/recent'; // upload path
+         $destinationPath = '/home/mpiuser/hpc/recent'; // upload path
          $extension = Input::file('code')->getClientOriginalExtension(); // getting image extension
          $code_fileName = $stu_id.".c";
          Input::file('code')->move($destinationPath, $code_fileName);

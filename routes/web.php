@@ -19,6 +19,7 @@ Route::get('/ranking', 'rankController@show');
 Route::get('/recent', 'recentController@show');
 Route::get('/check','checkingController@show');
 Route::post('/check','checkingController@index');
+
 Route::get('storage/{filename}', function ($filename)
 {
     $path = storage_path('public/' . $filename);

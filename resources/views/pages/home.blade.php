@@ -29,6 +29,9 @@
                 	<h1 class="page-header">
                 	Submitting Parallel Job
                 	</h1>
+					<h4>
+					Assignment 1: Heat Transfer
+					</h4>
             	</div>
         	</div>
         	{!! Form::open(array('url'=>'/','method'=>'POST', 'files'=>true)) !!}
@@ -103,7 +106,11 @@
                     	<div class="col-lg-4">
                     		<div class="form-group">
                     			<div class="col-lg-10">
-                                {!! Form::submit('Submit Code to Queue', array('class'=>'btn btn-success')) !!}
+								
+								{!! Form::submit('Submit Code to Queue', array('class'=>'btn btn-success')) !!}
+								
+								<!--<br> TIME IS UP!!!!-->
+								
                     			</div>
                     		</div>
                 		</div>

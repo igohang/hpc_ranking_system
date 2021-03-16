@@ -10,9 +10,9 @@ fileA = "A.txt"
 fileB = "B.txt"
 while(True):
 	conn = MySQLdb.connect(host= "localhost",
-                  user="root",
-                  passwd="P@ssw0rd?",
-                  db="parallel")
+                  user="mpiuser",
+                  passwd="thepasswordismpiuser555",
+                  db="mpiuser")
 	x = conn.cursor()
 	x.execute("SELECT * FROM record_tbls where status = 'N'")
 	queryRet = x.fetchall()
@@ -51,11 +51,11 @@ while(True):
 			conn.commit()
 			time.sleep(0.1)
 			print("Starting to execute MPI command")
-			runcmd="timeout 1200 mpirun -f hosts -n 19 ./" + row[1] + " " + fileA + " " + fileB + " "+ row[1] + "_out"
+			runcmd="timeout 1200 mpirun -f mpi_host -n 24 ./" + row[1] + " " + fileA + " " + fileB + " "+ row[1] + "_out"
 			n1=dt.datetime.now()
 			start = time.time()
 			logName = row[1]+ "_"+ str(row[0]) +"_log"
-			logPath = "/var/www/parallel/public/" + logName
+			logPath = "/home/mpiuser/html/public/" + logName
 			try:
 				print subprocess.check_output(runcmd, shell=True)
 			except subprocess.CalledProcessError, e: 
@@ -136,7 +136,7 @@ while(True):
 			#write log
 			print("Compilation error")
 			logName = row[1]+ "_"+ str(row[0]) +"_log"
-			logPath = "/var/www/parallel/public/" + logName
+			logPath = "/home/mpiuser/html/public/" + logName
 			text_file = open( logPath, "w")
 			text_file.write(compileLog)
 			text_file.close()
